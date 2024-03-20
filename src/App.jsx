@@ -6,50 +6,18 @@ const Subjects = [
   {
     code: "18CSC363J",
     name: "COMPUTER NETWORKS",
-    ct1: "25",
-    ct2: "50",
-    ct3: "50",
-    ct1pr: "5",
-    ct2pr: "10",
-    ct3pr: "10",
-    total: "100",
-    grade: "A",
   },
   {
     code: "18CSC364J",
     name: "INFORMATION SECURITY",
-    ct1: "25",
-    ct2: "50",
-    ct3: "50",
-    ct1pr: "5",
-    ct2pr: "10",
-    ct3pr: "10",
-    total: "100",
-    grade: "A",
   },
   {
     code: "18CSC365J",
     name: "ARTIFICIAL INTELLIGENCE",
-    ct1: "25",
-    ct2: "50",
-    ct3: "50",
-    ct1pr: "5",
-    ct2pr: "10",
-    ct3pr: "10",
-    total: "100",
-    grade: "A",
   },
   {
     code: "18CSE365J",
     name: "MODERN WEB APPLICATIONS",
-    ct1: "25",
-    ct2: "50",
-    ct3: "50",
-    ct1pr: "5",
-    ct2pr: "10",
-    ct3pr: "10",
-    total: "100",
-    grade: "A",
   },
   { code: "18CSE467J", name: "ENTERPRISE SYSTEMS" },
   { code: "18CSM362L", name: "COMPETITIVE PROFESSIONAL SKILLS - III" },
@@ -89,17 +57,22 @@ export default function App() {
   const handleSelectChange = (e) => {
     setSelectedCT(e.target.value);
   };
-
   return (
     <div className="bodymain">
       <div className="container">
-        <h1>Cycle Test MarkEntry</h1>
+        <h1>Cycle Test Mark Entry</h1>
         <div className="row">
-          <h1>Markentry</h1>
+          <h1>Mark Entry</h1>
         </div>
         <div>
           <div className="tablemarks">
-            <form action="marks.php" method="post">
+            <form action="http://localhost/marks.php" method="post">
+              <label htmlFor="registerNumber">Register Number:</label>
+              <input type="text" id="registerNumber" name="registerNumber" />
+  
+              <label htmlFor="name">Name:</label>
+              <input type="text" id="name" name="name" />
+  
               <label htmlFor="ctSelect">Select CT:</label>
               <select
                 id="ctSelect"
@@ -110,6 +83,7 @@ export default function App() {
                 <option value="ct2">CT-2</option>
                 <option value="ct3">CT-3</option>
               </select>
+              <input type="hidden" name="selectedCT" value={selectedCT} />
               <table>
                 <thead>
                   <tr>
@@ -123,15 +97,9 @@ export default function App() {
                       <td>{subject.name}</td>
                       <td>
                         <input
-                          type="text"
-                          name={selectedCT}
-                          placeholder={`Enter marks for ${
-                            selectedCT === "ct1"
-                              ? "25"
-                              : selectedCT === "ct2"
-                                ? "50"
-                                : "50"
-                          }`}
+                          type="number"
+                          name={`marks[${subject.code}][ct]`}
+                          placeholder={`Enter CT marks for ${subject.name}`}
                           onChange={(e) => checkCt(e, index)}
                         />
                         {errors[index] && (
@@ -141,12 +109,12 @@ export default function App() {
                         )}
                         <input
                           type="text"
-                          name={`${selectedCT}pr`}
+                          name={`marks[${subject.code}][pr]`}
                           placeholder="Enter practical marks"
                           onChange={(e) => checkPr(e, index)}
                         />
                         {errors[index] && (
-                          <p>{`${selectedCT.toUpperCase()} pratical marks should be less than or equal to ${
+                          <p>{`${selectedCT.toUpperCase()} practical marks should be less than or equal to ${
                             selectedCT === "ct1" ? "5" : "10"
                           }`}</p>
                         )}
@@ -164,4 +132,4 @@ export default function App() {
       </div>
     </div>
   );
-}
+                        }  
